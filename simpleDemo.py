@@ -8,11 +8,10 @@ import base64
 
 
 load_dotenv()
-VIDEO_PATH = "../Data4QA/cow_HeadButting.mp4"
+VIDEO_PATH = "../Data4QA/HeadButting_1.mp4"
 
 def process_video(video_path, seconds_per_frame=2):
     base64Frames = []
-    base_video_path, _ = os.path.splitext(video_path)
 
     video = cv2.VideoCapture(video_path)
     total_frames = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
@@ -36,7 +35,7 @@ def process_video(video_path, seconds_per_frame=2):
     return base64Frames
 
 # Extract 1 frame per second. You can adjust the `seconds_per_frame` parameter to change the sampling rate
-base64Frames = process_video(VIDEO_PATH, seconds_per_frame=.5)
+base64Frames = process_video(VIDEO_PATH, seconds_per_frame=1)
 
 from langchain_openai import AzureChatOpenAI
 llm = AzureChatOpenAI(
@@ -61,7 +60,7 @@ llm = AzureChatOpenAI(
 # visual summary
 # azure gpt-4o max image limit is 10
 messages=[
-    {"role": "system", "content": "You are classifying videos of cows into the following categories: walking, standing, sleeping, and aggressive behavior. Walking: A cow is walking around without interfering with another cow. Standing: A cow is standing without walking or running; Sleeping: The cow is sleeping; Aggressive behavior: The cow is butting head with another cow. identify the category in the video. Respond in Markdown."},
+    {"role": "system", "content": "You are classifying videos of cows into the following categories: walking, standing, sleeping or sitting, and head-butting. Respond with only the category name for the given video frames"},
     {"role": "user", "content": [
         {"type": "text", "text": "These are the frames from the video."},
         *map(lambda x: {"type": "image_url", 
