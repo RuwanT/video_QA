@@ -1,14 +1,18 @@
 # video_QA
-Use LLMs to classify cattle behaviour in video clips
+Use OpenAI gpt-4o to classify cattle behaviour in video clips.
 
+## Installation
+create a conda environment and install requirements
 ```
 conda create -n videoQA
 conda activate videoQA
-pip install langchain
-pip install -qU langchain-openai
-pip install langchain_community
-pip install python-dotenv
-pip install opencv-python
-pip install moviepy
-pip install pandas
+pip install -r requirements.txt
 ```
+
+## Running the code
+- Add the videos to a folder.
+- create a csv file with following fields: `FileName`, `FilePath`, `ClassLabel`. The ClassLabel column can be empty.
+- run the code a below
+  ```
+  python3 video_labelling_demo.py --input_csv='../Data4QA/input.csv'
+  ```
