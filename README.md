@@ -10,4 +10,5 @@ pip install langchain_community
 pip install python-dotenv
 pip install opencv-python
 pip install moviepy
+pip install pandas
 ```
